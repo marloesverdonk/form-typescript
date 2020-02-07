@@ -1,69 +1,43 @@
 import React from 'react'
+import EmailForm from './EmailForm'
+import AddressForm from './AddressForm'
 
 interface Props {
+    values: any
     onSubmit: any
     onChange: any
-    values: any
-    showPassword: any
     onClickPassword: any
-    termsAccepted: any
     onClickTerms: any
+    onClickNext: any
 }
 
 export const Form: React.FC<Props> = (props) => {
     return (
         <div>
             <form onSubmit={props.onSubmit}>
-                <label></label>
-                <input
-                    name='email'
-                    type='text'
-                    placeholder='email'
-                    onChange={props.onChange}
-                    value={props.values.email}
-                >
-                </input>
 
-                <br></br>
-
-                <input
-                    name='password'
-                    type={props.showPassword ? 'text' : 'password'}
-                    placeholder='password'
-                    onChange={props.onChange}
-                    value={props.values.password}
-                >
-                </input>
-
-                <br></br>
-
-                <input
-                    name='confirmPassword'
-                    type={props.showPassword ? 'text' : 'password'}
-                    placeholder='confirm password'
-                    onChange={props.onChange}
-                    value={props.values.confirmPassword}
-                >
-                </input>
-
-                <br></br>
-
-                <button type='button' onClick={props.onClickPassword}>Show password</button>
-
-                <br></br>
-                <br></br>
-
-                <label>Accept terms</label>
-                <input
-                    type="checkbox"
-                    onClick={props.onClickTerms}
-                />
-
-                <br></br>
-
-                <button type='submit'>
-                    Submit
-                </button>
+                {!props.values.showNext ?
+                    <EmailForm
+                        onChange={props.onChange}
+                        values={props.values}
+                        onClickPassword={props.onClickPassword}
+                        onClickNext={props.onClickNext}
+                    /> :
+                    <div>
+                        <AddressForm
+                            onChange={props.onChange}
+                            values={props.values}
+                            onClickNext={props.onClickNext}
+                        />
+                        <label>Accept terms</label>
+                        <input
+                            type="checkbox"
+                            onClick={props.onClickTerms}
+                        />
+                        <br></br>
+                        <button type='submit'>Submit</button>
+                    </div>
+                }
             </form>
             <div>
             </div>
