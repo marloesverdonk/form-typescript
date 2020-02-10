@@ -7,7 +7,6 @@ interface Props {
     values: State
     onSubmit: () => void
     onChange: (newdata: State) => void
-    onClickPassword: any
     onClickTerms: any
     onClickNext: any
 }
@@ -23,7 +22,6 @@ export const Form: React.FC<Props> = (props) => {
                     <EmailForm
                         onChange={(newEmail) => props.onChange({...props.values, ...newEmail})}
                         values={props.values}
-                        onClickPassword={props.onClickPassword}
                         onClickNext={props.onClickNext}
                     /> :
                     <div>
@@ -32,12 +30,11 @@ export const Form: React.FC<Props> = (props) => {
                             // ingevoerde address form wordt toegevoegd aan de State
 
                             values={props.values}
-                           // onClickNext={props.onClickNext}
                         />
                         <label>Accept terms</label>
                         <input
                             type="checkbox"
-                            onClick={props.onClickTerms}
+                            onClick={() => props.onChange({...props.values, termsAccepted: true})}
                         />
                         <br></br>
                         <button type='submit'>Submit</button>

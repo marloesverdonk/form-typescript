@@ -18,6 +18,8 @@ export interface State {
 
 interface Props { }
 
+
+
 export class FormContainer extends React.Component<Props, State>{
     state = {
         email: "",
@@ -47,20 +49,6 @@ export class FormContainer extends React.Component<Props, State>{
            this.setState({
                 error: "You are signed up!",
             })
-        }
-    }
-
-    // public onChange = (event: { target: { name: string; value: unknown } }) => {
-    //     const newState = { [event.target.name]: event.target.value } as Pick<State, keyof State>
-    //     this.setState(newState)
-    //     console.log(this.state.city)
-    // }
-
-    onClickPassword = () => {
-        if (this.state.showPassword) {
-            this.setState({ showPassword: false })
-        } else {
-            this.setState({ showPassword: true })
         }
     }
 
@@ -111,7 +99,6 @@ export class FormContainer extends React.Component<Props, State>{
                         // de ingevoerde gegevens vervangen de State
 
                         values={this.state}
-                        onClickPassword={this.onClickPassword}
                         onClickTerms={this.onClickTerms}
                         onClickNext={this.onClickNext}
                     /> :
