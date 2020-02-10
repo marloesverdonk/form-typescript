@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import FormContainer from './components/FormContainer'
+import { FormContainer } from './components/FormContainer'
 
 const App = () => {
   return (

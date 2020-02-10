@@ -1,19 +1,31 @@
 import React from 'react'
+import { State } from './FormContainer'
 
 interface Props {
-    values: any
-    onChange: any
-    onClickNext: any
+    values: State
+    // Moet dit geen values: State ipv Address zijn?
+
+    onChange: (newAddress: Address) => void 
 }
 
-export const Form: React.FC<Props> = (props) => {
+interface Address {
+    street: string
+    number: string
+    postalcode: string
+    city: string
+    showNext: boolean
+}
+
+export const AddressForm: React.FC<Props> = (props) => {
     return (
         <div>
             <input
                 name='street'
                 type='text'
                 placeholder='street'
-                onChange={props.onChange}
+                onChange={(event) => props.onChange({...props.values, street: event.currentTarget.value})}
+                // Alleen State.street wordt vervangen
+
                 value={props.values.street}
             >
             </input>
@@ -23,13 +35,13 @@ export const Form: React.FC<Props> = (props) => {
                 name='number'
                 type='text'
                 placeholder='number'
-                onChange={props.onChange}
+                onChange={(event) => props.onChange({...props.values, number: event.currentTarget.value})}
                 value={props.values.number}
             >
             </input>
             <br></br>
 
-            <select onChange={props.onChange} name='city'>
+            <select onChange={(event) => props.onChange({...props.values, city: event.currentTarget.value})} name='city' value={props.values.city}>
                 <option value='city'>-- city --</option>
                 <option value='Amsterdam'>Amsterdam</option>
                 <option value='Rotterdam'>Rotterdam</option>
@@ -41,17 +53,17 @@ export const Form: React.FC<Props> = (props) => {
                 name='postalcode'
                 type='text'
                 placeholder='postalcode'
-                onChange={props.onChange}
+                onChange={(event) => props.onChange({...props.values, postalcode: event.currentTarget.value})}
                 value={props.values.postalcode}
             >
             </input>
             <br></br>
 
-            <button type='button' onClick={props.onClickNext}>Back</button>
+            <button type='button' onClick={() => props.onChange({...props.values, showNext: false})}>Back</button>
             <div>
             </div>
         </div>
     )
 }
 
-export default Form
+export default AddressForm

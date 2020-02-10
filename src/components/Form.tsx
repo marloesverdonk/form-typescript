@@ -1,11 +1,12 @@
 import React from 'react'
 import EmailForm from './EmailForm'
 import AddressForm from './AddressForm'
+import { State } from './FormContainer'
 
 interface Props {
-    values: any
-    onSubmit: any
-    onChange: any
+    values: State
+    onSubmit: () => void
+    onChange: (newdata: State) => void
     onClickPassword: any
     onClickTerms: any
     onClickNext: any
@@ -14,20 +15,24 @@ interface Props {
 export const Form: React.FC<Props> = (props) => {
     return (
         <div>
-            <form onSubmit={props.onSubmit}>
+            <form onSubmit={e => {
+                e.preventDefault()
+                props.onSubmit()}}>
 
                 {!props.values.showNext ?
                     <EmailForm
-                        onChange={props.onChange}
+                        onChange={(newEmail) => props.onChange({...props.values, ...newEmail})}
                         values={props.values}
                         onClickPassword={props.onClickPassword}
                         onClickNext={props.onClickNext}
                     /> :
                     <div>
                         <AddressForm
-                            onChange={props.onChange}
+                            onChange={(newAddress) => props.onChange({...props.values, ...newAddress}) }
+                            // ingevoerde address form wordt toegevoegd aan de State
+
                             values={props.values}
-                            onClickNext={props.onClickNext}
+                           // onClickNext={props.onClickNext}
                         />
                         <label>Accept terms</label>
                         <input

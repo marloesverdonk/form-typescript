@@ -18,7 +18,7 @@ export interface State {
 
 interface Props { }
 
-export default class FormContainer extends React.Component<Props, State>{
+export class FormContainer extends React.Component<Props, State>{
     state = {
         email: "",
         password: "",
@@ -28,14 +28,13 @@ export default class FormContainer extends React.Component<Props, State>{
         postalcode: "",
         confirmPassword: "",
         error: "",
-
+        //onchange om showpassword te veranderen
         showPassword: false,
         termsAccepted: false,
         showNext: false
     }
 
-    onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    onSubmit = () => {
         if (!this.state.number || !this.state.street || this.state.city === 'city'|| !this.state.postalcode) {
             this.setState({
                 error: "Please fill in all fields"
@@ -51,11 +50,11 @@ export default class FormContainer extends React.Component<Props, State>{
         }
     }
 
-    public onChange = (event: { target: { name: string; value: unknown } }) => {
-        const newState = { [event.target.name]: event.target.value } as Pick<State, keyof State>
-        this.setState(newState)
-        console.log(this.state.city)
-    }
+    // public onChange = (event: { target: { name: string; value: unknown } }) => {
+    //     const newState = { [event.target.name]: event.target.value } as Pick<State, keyof State>
+    //     this.setState(newState)
+    //     console.log(this.state.city)
+    // }
 
     onClickPassword = () => {
         if (this.state.showPassword) {
@@ -107,8 +106,10 @@ export default class FormContainer extends React.Component<Props, State>{
                 {<h3>{this.state.error}</h3>}
                 {this.state.error !== 'You are signed up!' ?
                     <Form
-                        onSubmit={this.onSubmit}
-                        onChange={this.onChange}
+                        onSubmit={() => this.onSubmit()}
+                        onChange={newState => this.setState(newState)}
+                        // de ingevoerde gegevens vervangen de State
+
                         values={this.state}
                         onClickPassword={this.onClickPassword}
                         onClickTerms={this.onClickTerms}
