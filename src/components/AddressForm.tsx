@@ -57,10 +57,7 @@ export const AddressForm: React.FC<Props> = (props) => {
             </input>
             <br></br>
 
-            <button type='button' onClick={props.values.termsAccepted ?
-                () => props.onChange({ ...props.values, termsAccepted: false }) :
-                () => props.onChange({ ...props.values, termsAccepted: true })}>Back
-            </button>
+            <button type='button' onClick={() => props.onChange({ ...props.values, showNext: false })}>Back</button>
         </div>
     )
 }

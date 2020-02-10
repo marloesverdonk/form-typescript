@@ -32,7 +32,10 @@ export const Form: React.FC<Props> = (props) => {
                         <label>Accept terms</label>
                         <input
                             type="checkbox"
-                            onClick={() => props.onChange({ ...props.values, termsAccepted: true })}
+                            defaultChecked={props.values.termsAccepted}
+                            onClick={props.values.termsAccepted ? 
+                                () => props.onChange({ ...props.values, termsAccepted: false }) :
+                                () => props.onChange({ ...props.values, termsAccepted: true })}
                         />
                         <br></br>
                         <button type='submit'>Submit</button>

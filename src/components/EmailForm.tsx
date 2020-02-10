@@ -4,7 +4,7 @@ import { State } from './FormContainer'
 interface Props {
     values: State
     onChange: (newEmail: Email) => void
-    onClickNext: any
+    onClickNext: () => void
 }
 
 interface Email {

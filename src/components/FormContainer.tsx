@@ -32,51 +32,58 @@ export class FormContainer extends React.Component<Props, State>{
 
         showPassword: false,
         termsAccepted: false,
-        showNext: false
+        showNext: true
     }
 
     onSubmit = () => {
-        if (!this.state.number || !this.state.street || this.state.city === 'city' || !this.state.postalcode) {
-            this.setState({
-                error: "Please fill in all fields"
-            })
-        } else if (!this.state.termsAccepted) {
+        // if (!this.state.number || !this.state.street || this.state.city === 'city' || !this.state.postalcode) {
+        //     this.setState({
+        //         error: "Please fill in all fields"
+        //     })
+        // } else if (!this.state.termsAccepted) {
+        //     this.setState({
+        //         error: "Please accept the terms"
+        //     })
+        // } else {
+        //     this.setState({
+        //         error: "You are signed up!",
+        //     })
+        // }
+
+        if (!this.state.termsAccepted) {
             this.setState({
                 error: "Please accept the terms"
             })
         } else {
             this.setState({
-                error: "You are signed up!",
+                error:
+                    "You are signed up!",
             })
         }
     }
 
     onClickNext = () => {
-        if (this.state.showNext) {
-            this.setState({
-                showNext: false,
-                error: ""
-            })
-        } else {
-            if (!this.state.email.includes('@')) {
-                this.setState({
-                    error: "Please fill in an emailadres"
-                })
-            } else if (!this.state.password || !this.state.password.match(/[A-Z]/g) || !this.state.password.match(/[0-9]/g)) {
-                this.setState({
-                    error: "Please fill in a password (with a capital letter and a number)"
-                })
-            } else if (this.state.password !== this.state.confirmPassword) {
-                this.setState({
-                    error: "Passwords don't match"
-                })
-            } else {
-                this.setState({
-                    showNext: true,
-                    error: ""
-                })
-            }
-        }
+        // if (!this.state.email.includes('@')) {
+        //     this.setState({
+        //         error: "Please fill in an emailadres"
+        //     })
+        // } else if (!this.state.password || !this.state.password.match(/[A-Z]/g) || !this.state.password.match(/[0-9]/g)) {
+        //     this.setState({
+        //         error: "Please fill in a password (with a capital letter and a number)"
+        //     })
+        // } else if (this.state.password !== this.state.confirmPassword) {
+        //     this.setState({
+        //         error: "Passwords don't match"
+        //     })
+        // } else {
+        //     this.setState({
+        //         showNext: true,
+        //         error: ""
+        //     })
+        // }
+        this.setState({
+            showNext: true
+        })
     }
 
     render() {
