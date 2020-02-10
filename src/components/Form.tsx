@@ -7,8 +7,7 @@ interface Props {
     values: State
     onSubmit: () => void
     onChange: (newdata: State) => void
-    onClickTerms: any
-    onClickNext: any
+    onClickNext: () => void
 }
 
 export const Form: React.FC<Props> = (props) => {
@@ -16,33 +15,30 @@ export const Form: React.FC<Props> = (props) => {
         <div>
             <form onSubmit={e => {
                 e.preventDefault()
-                props.onSubmit()}}>
+                props.onSubmit()
+            }}>
 
                 {!props.values.showNext ?
                     <EmailForm
-                        onChange={(newEmail) => props.onChange({...props.values, ...newEmail})}
+                        onChange={(newEmail) => props.onChange({ ...props.values, ...newEmail })}
                         values={props.values}
                         onClickNext={props.onClickNext}
                     /> :
                     <div>
                         <AddressForm
-                            onChange={(newAddress) => props.onChange({...props.values, ...newAddress}) }
-                            // ingevoerde address form wordt toegevoegd aan de State
-
+                            onChange={(newAddress) => props.onChange({ ...props.values, ...newAddress })} // ingevoerde address form wordt toegevoegd aan de State
                             values={props.values}
                         />
                         <label>Accept terms</label>
                         <input
                             type="checkbox"
-                            onClick={() => props.onChange({...props.values, termsAccepted: true})}
+                            onClick={() => props.onChange({ ...props.values, termsAccepted: true })}
                         />
                         <br></br>
                         <button type='submit'>Submit</button>
                     </div>
                 }
             </form>
-            <div>
-            </div>
         </div>
     )
 }

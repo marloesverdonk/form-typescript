@@ -5,7 +5,6 @@ interface Props {
     values: State
     onChange: (newEmail: Email) => void
     onClickNext: any
-
 }
 
 interface Email {
@@ -49,16 +48,14 @@ export const Form: React.FC<Props> = (props) => {
             >
             </input>
             <br></br>
-            
+
             <button type='button' onClick={props.values.showPassword ?
                 () => props.onChange({ ...props.values, showPassword: false }) :
-                () => props.onChange({ ...props.values, showPassword: true })}>
-                Show password</button>
+                () => props.onChange({ ...props.values, showPassword: true })}>Show password
+            </button>
 
             <button type='button' onClick={props.onClickNext}>Next</button>
             <br></br>
-            <div>
-            </div>
         </div>
     )
 }

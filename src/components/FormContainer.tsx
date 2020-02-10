@@ -19,7 +19,6 @@ export interface State {
 interface Props { }
 
 
-
 export class FormContainer extends React.Component<Props, State>{
     state = {
         email: "",
@@ -30,14 +29,14 @@ export class FormContainer extends React.Component<Props, State>{
         postalcode: "",
         confirmPassword: "",
         error: "",
-        //onchange om showpassword te veranderen
+
         showPassword: false,
         termsAccepted: false,
         showNext: false
     }
 
     onSubmit = () => {
-        if (!this.state.number || !this.state.street || this.state.city === 'city'|| !this.state.postalcode) {
+        if (!this.state.number || !this.state.street || this.state.city === 'city' || !this.state.postalcode) {
             this.setState({
                 error: "Please fill in all fields"
             })
@@ -46,17 +45,9 @@ export class FormContainer extends React.Component<Props, State>{
                 error: "Please accept the terms"
             })
         } else {
-           this.setState({
+            this.setState({
                 error: "You are signed up!",
             })
-        }
-    }
-
-    onClickTerms = () => {
-        if (this.state.termsAccepted) {
-            this.setState({ termsAccepted: false })
-        } else {
-            this.setState({ termsAccepted: true })
         }
     }
 
@@ -96,10 +87,7 @@ export class FormContainer extends React.Component<Props, State>{
                     <Form
                         onSubmit={() => this.onSubmit()}
                         onChange={newState => this.setState(newState)}
-                        // de ingevoerde gegevens vervangen de State
-
                         values={this.state}
-                        onClickTerms={this.onClickTerms}
                         onClickNext={this.onClickNext}
                     /> :
                     <br></br>
