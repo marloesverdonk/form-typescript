@@ -1,5 +1,6 @@
 import React from 'react'
 import Form from './Form'
+import { Redirect } from 'react-router-dom'
 
 export interface State {
     email: string
@@ -89,6 +90,7 @@ export class FormContainer extends React.Component<Props, State>{
     render() {
         return (
             <div>
+                {<h1>Sign up</h1>}
                 {<h3>{this.state.error}</h3>}
                 {this.state.error !== 'You are signed up!' ?
                     <Form
@@ -97,7 +99,7 @@ export class FormContainer extends React.Component<Props, State>{
                         values={this.state}
                         onClickNext={this.onClickNext}
                     /> :
-                    <br></br>
+                    <Redirect to='/home'/>
                 }
             </div>)
     }

@@ -1,15 +1,19 @@
 import React from 'react';
 import './App.css';
 import { FormContainer } from './components/FormContainer'
+import { Home } from './components/Home'
+import { Route } from 'react-router-dom'
+
+
 
 const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Sign up</h1>
-      </header>
       <main>
-        <FormContainer/>
+        <div>
+          <Route path="/" exact component={FormContainer} />
+          <Route path='/home' exact component={Home} />
+        </div>
       </main>
     </div>
   );
