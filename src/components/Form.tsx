@@ -13,6 +13,8 @@ interface Props {
 export const Form: React.FC<Props> = (props) => {
     return (
         <div>
+            {<h1>Sign up</h1>}
+                {<h3>{props.values.error}</h3>}
             <form onSubmit={e => {
                 e.preventDefault()
                 props.onSubmit()

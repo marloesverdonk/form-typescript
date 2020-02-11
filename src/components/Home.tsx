@@ -1,12 +1,15 @@
 import React from 'react'
+//import { State } from './FormContainer'
 
-interface Props { }
+interface Props {
+
+ }
 
 export const Home: React.FC<Props> = (props) => {
     return (
         <div>
             <h1>Home</h1>
-            {console.log(props)}
+            {/* {props.values.error} */}
         </div>)
 }
 
