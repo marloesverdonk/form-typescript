@@ -1,16 +1,23 @@
 import React from 'react';
 import './App.css';
 import { FormContainer } from './components/FormContainer'
+import { LoginContainer } from './components/LoginContainer'
+import { Home } from './components/Home'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+
 
 const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Sign up</h1>
-      </header>
-      <main>
-        <FormContainer/>
-      </main>
+      <Router>
+      <Switch>
+        <Route path='/home' exact component={Home} />
+        <Route path='/login' exact component={LoginContainer}/>
+        <Route path='/' exact component={FormContainer} />
+      </Switch>
+      </Router>
+
     </div>
   );
 }
