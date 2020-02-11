@@ -1,15 +1,10 @@
 import React from 'react'
-import { State } from './FormContainer'
+import { State, LoginEmail } from './FormContainer'
 
 interface Props {
     values: State
-    onChange: (newLogin: Email) => void
+    onChange: (newLogin: LoginEmail) => void
     onSubmit: () => void
-}
-
-interface Email {
-    loginemail: string
-    loginpassword: string
 }
 
 export const Login: React.FC<Props> = (props) => {
@@ -25,8 +20,8 @@ export const Login: React.FC<Props> = (props) => {
                     name='email'
                     type='text'
                     placeholder='email'
-                    onChange={event => props.onChange({ ...props.values, loginemail: event.currentTarget.value })}
-                    value={props.values.loginemail}
+                    onChange={event => props.onChange({ ...props.values, loginEmail: event.currentTarget.value })}
+                    value={props.values.loginEmail}
                 >
                 </input>
                 <br></br>
@@ -35,8 +30,8 @@ export const Login: React.FC<Props> = (props) => {
                     name='password'
                     type={props.values.showPassword ? 'text' : 'password'}
                     placeholder='password'
-                    onChange={event => props.onChange({ ...props.values, loginpassword: event.currentTarget.value })}
-                    value={props.values.loginpassword}
+                    onChange={event => props.onChange({ ...props.values, loginPassword: event.currentTarget.value })}
+                    value={props.values.loginPassword}
                 >
                 </input>
                 <br></br>

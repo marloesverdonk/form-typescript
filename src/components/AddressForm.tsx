@@ -1,19 +1,12 @@
 import React from 'react'
-//import { State } from './FormContainer'
+import { Address } from './FormContainer'
 
 interface Props {
-    values: Address // Moet dit State ipv Address zijn? 
+    values: Address // Moet dit State ipv Address zijn? --> in dit geval kan het allebei omdat alleen values van Address worden gebruikt, soms is het nodig om het te veranderen naar State
     onChange: (newAddress: Address) => void
 }
 
-interface Address {
-    street: string
-    number: string
-    postalcode: string
-    city: string
-    showNext: boolean
-    termsAccepted: boolean
-}
+
 
 export const AddressForm: React.FC<Props> = (props) => {
     return (
@@ -51,8 +44,8 @@ export const AddressForm: React.FC<Props> = (props) => {
                 name='postalcode'
                 type='text'
                 placeholder='postalcode'
-                onChange={(event) => props.onChange({ ...props.values, postalcode: event.currentTarget.value })}
-                value={props.values.postalcode}
+                onChange={(event) => props.onChange({ ...props.values, postalCode: event.currentTarget.value })}
+                value={props.values.postalCode}
             >
             </input>
             <br></br>

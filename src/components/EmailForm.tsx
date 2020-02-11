@@ -1,5 +1,5 @@
 import React from 'react'
-import { State } from './FormContainer'
+import { State, Email } from './FormContainer'
 
 interface Props {
     values: State
@@ -7,13 +7,7 @@ interface Props {
     onClickNext: () => void
 }
 
-interface Email {
-    email: string
-    password: string
-    confirmPassword: string
-    showNext: boolean
-    showPassword: boolean
-}
+
 
 export const Form: React.FC<Props> = (props) => {
     return (

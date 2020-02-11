@@ -13,7 +13,7 @@ interface Props {
 export class LoginContainer extends React.Component<Props, State>{
 
     onSubmit = () => {
-        if (this.props.values.loginpassword === this.props.values.password && this.props.values.loginemail === this.props.values.email) {
+        if (this.props.values.loginPassword === this.props.values.password && this.props.values.loginEmail === this.props.values.email) {
             this.props.onChange({ ...this.props.values, error: 'You are logged in' })
         } else {
             this.props.onChange({ ...this.props.values, error: 'Email or password incorrect!' })
@@ -42,9 +42,8 @@ export default LoginContainer
 
 
 // Zou je een eigen state maken of gebruik je de state uit FormContainer? 
-//      Wanneer zou je een eigen state maken? 
-//      Wordt State goed gebruikt?
+//      Wanneer zou je een eigen state maken?  --> eigenlijk nooit, proberen te vermijden
+//      Wordt State goed gebruikt? --> ja
 
+// Wanneer zou je Redirect gebruiken? --> dit is een goed moment 
 
-// Wanneer zou je Redirect gebruiken? 
-//      Zou je een andere manier van Routing toepassen?
