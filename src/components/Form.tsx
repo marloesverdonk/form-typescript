@@ -14,7 +14,7 @@ export const Form: React.FC<Props> = (props) => {
     return (
         <div>
             {<h1>Sign up</h1>}
-                {<h3>{props.values.error}</h3>}
+            {<h3>{props.values.error}</h3>}
             <form onSubmit={e => {
                 e.preventDefault()
                 props.onSubmit()
@@ -35,7 +35,7 @@ export const Form: React.FC<Props> = (props) => {
                         <input
                             type="checkbox"
                             defaultChecked={props.values.termsAccepted}
-                            onClick={props.values.termsAccepted ? 
+                            onClick={props.values.termsAccepted ?
                                 () => props.onChange({ ...props.values, termsAccepted: false }) :
                                 () => props.onChange({ ...props.values, termsAccepted: true })}
                         />

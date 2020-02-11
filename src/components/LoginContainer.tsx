@@ -39,3 +39,12 @@ export class LoginContainer extends React.Component<Props, State>{
 }
 
 export default LoginContainer
+
+
+// Zou je een eigen state maken of gebruik je de state uit FormContainer? 
+//      Wanneer zou je een eigen state maken? 
+//      Wordt State goed gebruikt?
+
+
+// Wanneer zou je Redirect gebruiken? 
+//      Zou je een andere manier van Routing toepassen?

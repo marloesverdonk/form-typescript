@@ -3,7 +3,7 @@ import React from 'react'
 
 interface Props {
 
- }
+}
 
 export const Home: React.FC<Props> = (props) => {
     return (
@@ -14,3 +14,6 @@ export const Home: React.FC<Props> = (props) => {
 }
 
 export default Home
+
+
+// Hoe gebruik je props bij Redirect of kan dat niet? 

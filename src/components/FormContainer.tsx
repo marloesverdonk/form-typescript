@@ -39,7 +39,7 @@ export class FormContainer extends React.Component<Props, State>{
 
         showPassword: false,
         termsAccepted: false,
-        showNext: true
+        showNext: false
     }
 
     onSubmit = () => {
@@ -90,27 +90,27 @@ export class FormContainer extends React.Component<Props, State>{
             })
         }
     }
-        //     this.setState({
-        //         showNext: true
-        //     })
-        // }
+    //     this.setState({
+    //         showNext: true
+    //     })
+    // }
 
-        render() {
-            return (
-                <div>
+    render() {
+        return (
+            <div>
 
-                    {this.state.error !== 'You are signed up!' && this.state.error !== 'You are logged in' && this.state.error !== 'Email or password incorrect!' ?
-                        <Form
-                            onSubmit={() => this.onSubmit()}
-                            onChange={newState => this.setState(newState)}
-                            values={this.state}
-                            onClickNext={this.onClickNext}
-                        /> :
-                        <LoginContainer
-                            values={this.state}
-                            onChange={newState => this.setState(newState)}
-                        />
-                    }
-                </div>)
-        }
+                {this.state.error !== 'You are signed up!' && this.state.error !== 'You are logged in' && this.state.error !== 'Email or password incorrect!' ?
+                    <Form
+                        onSubmit={() => this.onSubmit()}
+                        onChange={newState => this.setState(newState)}
+                        values={this.state}
+                        onClickNext={this.onClickNext}
+                    /> :
+                    <LoginContainer
+                        values={this.state}
+                        onChange={newState => this.setState(newState)}
+                    />
+                }
+            </div>)
     }
+}

@@ -1,8 +1,8 @@
 import React from 'react'
-import { State } from './FormContainer'
+//import { State } from './FormContainer'
 
 interface Props {
-    values: State // Moet dit State ipv Address zijn?
+    values: Address // Moet dit State ipv Address zijn? 
     onChange: (newAddress: Address) => void
 }
 
