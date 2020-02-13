@@ -1,9 +1,9 @@
 import React from 'react'
-import { State, LoginEmail } from './FormContainer'
+import { State } from './FormContainer'
 
 interface Props {
     values: State
-    onChange: (newLogin: LoginEmail) => void
+    onChange: (newLogin: State) => void
     onSubmit: () => void
 }
 
@@ -20,7 +20,7 @@ export const Login: React.FC<Props> = (props) => {
                     name='email'
                     type='text'
                     placeholder='email'
-                    onChange={event => {if(props.values.step === 'login') props.onChange({ ...props.values, loginEmail: event.currentTarget.value })}}
+                    onChange={event => { event.preventDefault();if(props.values.step === 'login') props.onChange({ ...props.values, loginEmail: event.currentTarget.value })}}
                     value={props.values.loginEmail}
                 >
                 </input>
@@ -30,7 +30,7 @@ export const Login: React.FC<Props> = (props) => {
                     name='password'
                     type='password'
                     placeholder='password'
-                    onChange={event => {if(props.values.step === 'login')props.onChange({ ...props.values, loginPassword: event.currentTarget.value })}}
+                    onChange={event => {event.preventDefault(); if(props.values.step === 'login') props.onChange({ ...props.values, loginPassword: event.currentTarget.value })}}
                     value={props.values.loginPassword}
                 >
                 </input>
@@ -45,3 +45,4 @@ export const Login: React.FC<Props> = (props) => {
 }
 
 export default Login
+

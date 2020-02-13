@@ -2,12 +2,10 @@ import React from 'react'
 import { Address } from './FormContainer'
 
 interface Props {
-    values: Address // Moet dit State ipv Address zijn? --> in dit geval kan het allebei omdat alleen values van Address worden gebruikt, soms is het nodig om het te veranderen naar State
+    values: Address 
     onChange: (newAddress: Address) => void
     onClickBack: () => void
 }
-
-
 
 export const AddressForm: React.FC<Props> = (props) => {
     return (
@@ -16,7 +14,7 @@ export const AddressForm: React.FC<Props> = (props) => {
                 name='street'
                 type='text'
                 placeholder='street'
-                onChange={(event) => props.onChange({ ...props.values, street: event.currentTarget.value })} // alleen State.street wordt vervangen
+                onChange={(event) => props.onChange({ ...props.values, street: event.currentTarget.value })} 
 
                 value={props.values.street}
             >
@@ -57,3 +55,4 @@ export const AddressForm: React.FC<Props> = (props) => {
 }
 
 export default AddressForm
+

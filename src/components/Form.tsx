@@ -30,7 +30,7 @@ export const Form: React.FC<Props> = (props) => {
                     props.values.step === 'second' ?
                     <div>
                         <AddressForm
-                            onChange={(newAddress) => {if(props.values.step === 'second'){props.onChange({ ...props.values, addressData: newAddress })}}} // ingevoerde address form wordt toegevoegd aan de State
+                            onChange={(newAddress) => {if(props.values.step === 'second'){props.onChange({ ...props.values, addressData: newAddress })}}} 
                             values={props.values.addressData}
                             onClickBack={props.onClickBack}
                         />
@@ -40,7 +40,7 @@ export const Form: React.FC<Props> = (props) => {
                             defaultChecked={props.values.addressData.termsAccepted}
                             onClick={props.values.addressData.termsAccepted ?
                                 () => {if(props.values.step === 'second') props.onChange({ ...props.values, addressData: {...props.values.addressData, termsAccepted: false }})} :
-                                () => {if(props.values.step === 'second') props.onChange({ ...props.values, addressData: {...props.values.addressData, termsAccepted: false }})}}
+                                () => {if(props.values.step === 'second') props.onChange({ ...props.values, addressData: {...props.values.addressData, termsAccepted: true }})}}
                         />
                         <br></br>
                         <button type='submit'>Submit</button>
@@ -53,3 +53,4 @@ export const Form: React.FC<Props> = (props) => {
 }
 
 export default Form
+

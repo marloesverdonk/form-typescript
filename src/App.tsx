@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { FormContainer } from './components/FormContainer'
-import { LoginContainer } from './components/LoginContainer'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () => {
@@ -10,7 +9,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route path='/home' exact component={FormContainer} />
-          <Route path='/login' exact component={LoginContainer} />
+          <Route path='/login' exact component={FormContainer} />
           <Route path='/' exact component={FormContainer} />
         </Switch>
       </Router>
@@ -21,5 +20,3 @@ const App = () => {
 
 export default App;
 
-
-// --> zie path='/home' -> van Home verandert naar FormContainer

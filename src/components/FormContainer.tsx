@@ -3,6 +3,7 @@ import Form from './Form'
 import LoginContainer from './LoginContainer'
 import { RouteComponentProps } from 'react-router-dom'
 import { Home } from './Home'
+import { onNextPromise, onSubmitPromise } from '../api'
 
 export type State = {
     error: string
@@ -80,33 +81,23 @@ export class FormContainer extends React.Component<RouteComponentProps<Props>, S
         }
     }
 
-    validateNext = () => {
+    onClickNext = async () => {
         if (this.state.step === 'first') {
-            if (!this.state.emailData.email.includes('@')) {
-                return "Please fill in an emailadres"
-            } else if (!this.state.emailData.password || !this.state.emailData.password.match(/[A-Z]/g) || !this.state.emailData.password.match(/[0-9]/g)) {
-                return "Please fill in a password (with a capital letter and a number)"
-            } else if (this.state.emailData.password !== this.state.emailData.confirmPassword) {
-                return "Passwords don't match"
-            } else {
-                return ""
-            }
-        } else {
-            return ""
-        }
-    }
 
-    onClickNext = () => {
-        const error = this.validateNext()
-        if (error === "") {
-            this.setState({
-                step: 'second',
-                error: error,
+            onNextPromise(this.state.emailData)
+            .then((message) => {
+                if (message === "") {
+                    this.setState({
+                        step: 'second',
+                        error: ""
+                    })
+                } else {
+                    this.setState({
+                        error: message
+                    })
+                }
             })
-        } else {
-            this.setState({
-                error: error,
-            })
+            .catch(console.error)
         }
     }
 
@@ -116,26 +107,26 @@ export class FormContainer extends React.Component<RouteComponentProps<Props>, S
         })
     }
 
-    validateSubmit = () => {
-        if (this.state.step === 'second') {
-            if (!this.state.addressData.number || !this.state.addressData.street || this.state.addressData.city === 'city' || !this.state.addressData.postalCode) {
-                return "Please fill in all fields"
-            } else if (!this.state.addressData.termsAccepted) {
-                return "Please accept the terms"
-            } else {
-                return "You are signed up!"
-            }
-        } else {
-            return ""
-        }
-    }
-
     onSubmit = () => {
-        const error = this.validateSubmit()
-        this.setState({
-            error: error,
-            step: 'login'
-        })
+        if (this.state.step === 'second') {
+
+            onSubmitPromise(this.state.addressData)
+            .then((message) => {
+                if (message === "") {
+                    this.setState({
+                        step: 'login',
+                        error: "",
+                        loginEmail: "",
+                        loginPassword: "",
+                    })
+                } else {
+                    this.setState({
+                        error: message
+                    })
+                }
+            })
+            .catch(console.error)
+        }
     }
 
     render() {
@@ -144,21 +135,22 @@ export class FormContainer extends React.Component<RouteComponentProps<Props>, S
         } else {
             return (
                 <div>
-                    {this.state.step === 'first' || this.state.step === 'second' ? // || 'second'?
+                    {this.state.step === 'first' || this.state.step === 'second' ?
                         <Form
                             onSubmit={() => this.onSubmit()}
-                            onChange={newSignUp => this.setState({...this.state, ...newSignUp})}
+                            onChange={newSignUp => this.setState({ ...this.state, ...newSignUp })}
                             values={this.state}
                             onClickNext={() => this.onClickNext()}
-                        onClickBack={() => this.onClickBack()}
+                            onClickBack={() => this.onClickBack()}
                         /> :
                         this.state.step === 'login' ?
                             <LoginContainer
                                 values={this.state}
-                                onChange={newState => this.setState(newState)}
+                                onChange={newLogin => this.setState({ ...this.state, ...newLogin})}
                             /> : <></>
                     }
                 </div>)
         }
     }
 }
+
