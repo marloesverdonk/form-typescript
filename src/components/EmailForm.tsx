@@ -10,48 +10,48 @@ interface Props {
 
 
 export const Form: React.FC<Props> = (props) => {
-    return (
+    return props.values.step === 'first' ? (
         <div>
             <label></label>
             <input
                 name='email'
                 type='text'
                 placeholder='email'
-                onChange={event => props.onChange({ ...props.values, email: event.currentTarget.value })}
-                value={props.values.email}
+                onChange={event => {if(props.values.step === 'first') props.onChange({ ...props.values.emailData, email: event.currentTarget.value })}}
+                value={props.values.emailData.email}
             >
             </input>
             <br></br>
 
             <input
                 name='password'
-                type={props.values.showPassword ? 'text' : 'password'}
+                type={props.values.emailData.showPassword ? 'text' : 'password'}
                 placeholder='password'
-                onChange={event => props.onChange({ ...props.values, password: event.currentTarget.value })}
-                value={props.values.password}
+                onChange={event => {if(props.values.step === 'first') props.onChange({ ...props.values.emailData, password: event.currentTarget.value })}}
+                value={props.values.emailData.password}
             >
             </input>
             <br></br>
 
             <input
                 name='confirmPassword'
-                type={props.values.showPassword ? 'text' : 'password'}
+                type={props.values.emailData.showPassword ? 'text' : 'password'}
                 placeholder='confirm password'
-                onChange={event => props.onChange({ ...props.values, confirmPassword: event.currentTarget.value })}
-                value={props.values.confirmPassword}
+                onChange={event => {if(props.values.step === 'first') props.onChange({ ...props.values.emailData, confirmPassword: event.currentTarget.value })}}
+                value={props.values.emailData.confirmPassword}
             >
             </input>
             <br></br>
 
-            <button type='button' onClick={props.values.showPassword ?
-                () => props.onChange({ ...props.values, showPassword: false }) :
-                () => props.onChange({ ...props.values, showPassword: true })}>Show password
+            <button type='button' onClick={props.values.emailData.showPassword ?
+                () => {if(props.values.step === 'first')props.onChange({ ...props.values.emailData, showPassword: false })} :
+                () => {if(props.values.step === 'first')props.onChange({ ...props.values.emailData, showPassword: true })}}>Show password
             </button>
 
             <button type='button' onClick={props.onClickNext}>Next</button>
             <br></br>
         </div>
-    )
+    ) : <></>
 }
 
 export default Form

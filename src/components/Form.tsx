@@ -1,13 +1,14 @@
 import React from 'react'
 import EmailForm from './EmailForm'
 import AddressForm from './AddressForm'
-import { State } from './FormContainer'
+import { State, SignUp } from './FormContainer'
 
 interface Props {
     values: State
     onSubmit: () => void
-    onChange: (newdata: State) => void
+    onChange: (newdata: SignUp ) => void
     onClickNext: () => void
+    onClickBack: () => void
 }
 
 export const Form: React.FC<Props> = (props) => {
@@ -20,29 +21,32 @@ export const Form: React.FC<Props> = (props) => {
                 props.onSubmit()
             }}>
 
-                {!props.values.showNext ?
+                {props.values.step === 'first' ?
                     <EmailForm
-                        onChange={(newEmail) => props.onChange({ ...props.values, ...newEmail })}
+                        onChange={(newEmail) => {if(props.values.step === 'first'){props.onChange({ ...props.values, emailData: newEmail })}}}
                         values={props.values}
                         onClickNext={props.onClickNext}
-                    /> :
+                    /> : 
+                    props.values.step === 'second' ?
                     <div>
                         <AddressForm
-                            onChange={(newAddress) => props.onChange({ ...props.values, ...newAddress })} // ingevoerde address form wordt toegevoegd aan de State
-                            values={props.values}
+                            onChange={(newAddress) => {if(props.values.step === 'second'){props.onChange({ ...props.values, addressData: newAddress })}}} // ingevoerde address form wordt toegevoegd aan de State
+                            values={props.values.addressData}
+                            onClickBack={props.onClickBack}
                         />
                         <label>Accept terms</label>
                         <input
                             type="checkbox"
-                            defaultChecked={props.values.termsAccepted}
-                            onClick={props.values.termsAccepted ?
-                                () => props.onChange({ ...props.values, termsAccepted: false }) :
-                                () => props.onChange({ ...props.values, termsAccepted: true })}
+                            defaultChecked={props.values.addressData.termsAccepted}
+                            onClick={props.values.addressData.termsAccepted ?
+                                () => {if(props.values.step === 'second') props.onChange({ ...props.values, addressData: {...props.values.addressData, termsAccepted: false }})} :
+                                () => {if(props.values.step === 'second') props.onChange({ ...props.values, addressData: {...props.values.addressData, termsAccepted: false }})}}
                         />
                         <br></br>
                         <button type='submit'>Submit</button>
                     </div>
-                }
+                    : <> </>
+                } 
             </form>
         </div>
     )

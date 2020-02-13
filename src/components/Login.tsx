@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const Login: React.FC<Props> = (props) => {
-    return (
+    return props.values.step === 'login' ? (
         <div>
             {<h1>Log in</h1>}
             <form onSubmit={e => {
@@ -20,7 +20,7 @@ export const Login: React.FC<Props> = (props) => {
                     name='email'
                     type='text'
                     placeholder='email'
-                    onChange={event => props.onChange({ ...props.values, loginEmail: event.currentTarget.value })}
+                    onChange={event => {if(props.values.step === 'login') props.onChange({ ...props.values, loginEmail: event.currentTarget.value })}}
                     value={props.values.loginEmail}
                 >
                 </input>
@@ -28,9 +28,9 @@ export const Login: React.FC<Props> = (props) => {
 
                 <input
                     name='password'
-                    type={props.values.showPassword ? 'text' : 'password'}
+                    type='password'
                     placeholder='password'
-                    onChange={event => props.onChange({ ...props.values, loginPassword: event.currentTarget.value })}
+                    onChange={event => {if(props.values.step === 'login')props.onChange({ ...props.values, loginPassword: event.currentTarget.value })}}
                     value={props.values.loginPassword}
                 >
                 </input>
@@ -41,7 +41,7 @@ export const Login: React.FC<Props> = (props) => {
                 <br></br>
             </form>
         </div>
-    )
+    ) : <></>
 }
 
 export default Login

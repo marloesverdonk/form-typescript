@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Login } from './Login'
 import { State } from './FormContainer'
+import { logInPromise } from '../api'
 
 
 interface Props {
@@ -12,18 +13,21 @@ interface Props {
 
 export class LoginContainer extends React.Component<Props, State>{
 
-    onSubmit = () => {
-        if (this.props.values.loginPassword === this.props.values.password && this.props.values.loginEmail === this.props.values.email) {
-            this.props.onChange({ ...this.props.values, error: 'You are logged in' })
-        } else {
-            this.props.onChange({ ...this.props.values, error: 'Email or password incorrect!' })
-        }
+    onSubmit = async () => {
+       logInPromise().then((b) => {if(b){this.props.onChange({ ...this.props.values, error: 'You are logged in' })}})
+       .catch(_ => this.props.onChange({ ...this.props.values, error: 'Email or password incorrect!' })) // _ -> placeholder when you dont use the input
+
+        // if (this.props.values.loginPassword === this.props.values.password && this.props.values.loginEmail === this.props.values.email) {
+        //     this.props.onChange({ ...this.props.values, error: 'You are logged in' })
+        // } else {
+        //     this.props.onChange({ ...this.props.values, error: 'Email or password incorrect!' })
+        // }
     }
 
     render() {
         return (
             <div>
-                {this.props.values.error !== 'You are logged in' ?
+                {this.props.values.step === 'login' ?
                     <div>
                         {<h3>{this.props.values.error}</h3>}
                         <Login

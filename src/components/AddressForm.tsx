@@ -4,6 +4,7 @@ import { Address } from './FormContainer'
 interface Props {
     values: Address // Moet dit State ipv Address zijn? --> in dit geval kan het allebei omdat alleen values van Address worden gebruikt, soms is het nodig om het te veranderen naar State
     onChange: (newAddress: Address) => void
+    onClickBack: () => void
 }
 
 
@@ -50,7 +51,7 @@ export const AddressForm: React.FC<Props> = (props) => {
             </input>
             <br></br>
 
-            <button type='button' onClick={() => props.onChange({ ...props.values, showNext: false })}>Back</button>
+            <button type='button' onClick={() => props.onClickBack()}>Back</button>
         </div>
     )
 }

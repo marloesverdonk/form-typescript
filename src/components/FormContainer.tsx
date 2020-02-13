@@ -4,79 +4,93 @@ import LoginContainer from './LoginContainer'
 import { RouteComponentProps } from 'react-router-dom'
 import { Home } from './Home'
 
-export type State = { // --> interface is veranderd naar type, dit is vooral een syntax ding
+export type State = {
     error: string
-} & Address & Email & LoginEmail // --> voorkomt dat je verschillende types gebruikt bij dezelfde parameter + je hoeft ze maar 1x te typen
+} & (SignUp | LoginEmail | Home)
 
 interface Props { }
 
-export interface Address {
-    street: string
-    number: string
-    postalCode: string
-    city: string
-    showNext: boolean
-    termsAccepted: boolean
-}
-
-export interface Email {
-    email: string
-    password: string
-    confirmPassword: string
-    showNext: boolean
-    showPassword: boolean
+export interface Home {
+    step: 'home'
 }
 
 export interface LoginEmail {
+    step: 'login'
     loginEmail: string
     loginPassword: string
 }
 
-export class FormContainer extends React.Component<RouteComponentProps<Props> //command dot gebruiken!
+export interface SignUp {
+    step: 'first' | 'second'
+    emailData: Email
+    addressData: Address
+}
 
-    , State>{
-    state = {
-        email: "",
-        password: "",
-        street: "",
-        number: "",
-        city: "city",
-        postalCode: "",
-        confirmPassword: "",
-        error: "",
-        loginEmail: "",
-        loginPassword: "",
+export interface Address {
+    // step: 'second'
+    street: string
+    number: string
+    postalCode: string
+    city: string
+    termsAccepted: boolean
+}
 
-        showPassword: false,
-        termsAccepted: false,
-        showNext: false
-    }
+export interface Email {
+    // step: 'first'
+    email: string
+    password: string
+    confirmPassword: string
+    showPassword: boolean
+}
 
+export class FormContainer extends React.Component<RouteComponentProps<Props>, State>{
 
-    validateSubmit = () => {
-        if (!this.state.number || !this.state.street || this.state.city === 'city' || !this.state.postalCode) {
-            return "Please fill in all fields"
-        } else if (!this.state.termsAccepted) {
-            return "Please accept the terms"
+    constructor(props: RouteComponentProps<Props>) {
+        super(props)
+        if (props.location.pathname === '/home') {
+            this.state = {
+                step: 'home',
+                error: ""
+            }
+        } else if (props.location.pathname === '/') {
+            this.state = {
+                step: 'first',
+                error: "",
+                emailData: {
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                    showPassword: false,
+                },
+                addressData: {
+                    street: "",
+                    number: "",
+                    postalCode: "",
+                    city: "",
+                    termsAccepted: false,
+                }
+            }
         } else {
-            return "You are signed up!"
+            this.state = {
+                step: 'login',
+                error: "",
+                loginEmail: "",
+                loginPassword: "",
+            }
         }
     }
 
-    onSubmit = () => {
-        const error = this.validateSubmit()
-        this.setState({
-            error: error
-        })
-    }
-
-    validateNext = () => { // --> een speciale callback maken met logica
-        if (!this.state.email.includes('@')) {
-            return "Please fill in an emailadres"
-        } else if (!this.state.password || !this.state.password.match(/[A-Z]/g) || !this.state.password.match(/[0-9]/g)) {
-            return "Please fill in a password (with a capital letter and a number)"
-        } else if (this.state.password !== this.state.confirmPassword) {
-            return "Passwords don't match"
+    validateNext = () => {
+        if (this.state.step === 'first') {
+            if (!this.state.emailData.email.includes('@')) {
+                return "Please fill in an emailadres"
+            } else if (!this.state.emailData.password || !this.state.emailData.password.match(/[A-Z]/g) || !this.state.emailData.password.match(/[0-9]/g)) {
+                return "Please fill in a password (with a capital letter and a number)"
+            } else if (this.state.emailData.password !== this.state.emailData.confirmPassword) {
+                return "Passwords don't match"
+            } else {
+                return ""
+            }
         } else {
             return ""
         }
@@ -84,30 +98,65 @@ export class FormContainer extends React.Component<RouteComponentProps<Props> //
 
     onClickNext = () => {
         const error = this.validateNext()
+        if (error === "") {
+            this.setState({
+                step: 'second',
+                error: error,
+            })
+        } else {
+            this.setState({
+                error: error,
+            })
+        }
+    }
+
+    onClickBack = () => {
         this.setState({
-            error: error,
-            showNext: error === ""
+            step: 'first',
         })
     }
-  
+
+    validateSubmit = () => {
+        if (this.state.step === 'second') {
+            if (!this.state.addressData.number || !this.state.addressData.street || this.state.addressData.city === 'city' || !this.state.addressData.postalCode) {
+                return "Please fill in all fields"
+            } else if (!this.state.addressData.termsAccepted) {
+                return "Please accept the terms"
+            } else {
+                return "You are signed up!"
+            }
+        } else {
+            return ""
+        }
+    }
+
+    onSubmit = () => {
+        const error = this.validateSubmit()
+        this.setState({
+            error: error,
+            step: 'login'
+        })
+    }
+
     render() {
-        if (this.props.location.pathname === "/home") {
-            return <div><Home values={this.state} /> This text comes from FormContainer! </div>
+        if (this.state.step === 'home') {
+            return <div><Home values={this.state} /></div>
         } else {
             return (
                 <div>
-
-                    {this.state.error !== 'You are signed up!' && this.state.error !== 'You are logged in' && this.state.error !== 'Email or password incorrect!' ?
+                    {this.state.step === 'first' || this.state.step === 'second' ? // || 'second'?
                         <Form
                             onSubmit={() => this.onSubmit()}
-                            onChange={newState => this.setState(newState)}
+                            onChange={newSignUp => this.setState({...this.state, ...newSignUp})}
                             values={this.state}
                             onClickNext={() => this.onClickNext()}
+                        onClickBack={() => this.onClickBack()}
                         /> :
-                        <LoginContainer
-                            values={this.state}
-                            onChange={newState => this.setState(newState)}
-                        />
+                        this.state.step === 'login' ?
+                            <LoginContainer
+                                values={this.state}
+                                onChange={newState => this.setState(newState)}
+                            /> : <></>
                     }
                 </div>)
         }
